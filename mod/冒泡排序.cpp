@@ -11,7 +11,7 @@ int main()
     }
     for (int i = n; i > 1; i--)
     {
-        for (int j = 1; j < i - 1; j++)
+        for (int j = 1; j < i; j++)
         {
             if (a[j - 1] > a[j])
             {
