@@ -1,3 +1,5 @@
 *.exec
 .vscode/
 *.git*
+*.md
+*.exe
