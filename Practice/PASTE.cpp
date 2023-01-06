@@ -1,59 +1,63 @@
-// P1188
+// 1188
 #include <bits/stdc++.h>
 using namespace std;
-struct node
+
+struct Char
 {
-    int value;
-    node *after;
+    int content;
+    Char* next;
 };
+Char file[100];
+int n, k;
 
-node chart[100000];
-
-node *index(int id)
+void init()
 {
-    node *temp;
-    temp = &chart[0];
-    for (int i = 0; i < id; i++) 
+    for (int i = 0; i <= n; i++)
     {
-        temp = temp->after;
+        file[i].content = i;
+        file[i].next = &file[i+1];
     }
-    return temp;
+}
+
+Char* index(int id)
+{
+    Char* curr = &file[0];
+    for (int i = 0; i < id; i++)
+    {
+        curr = curr -> next;
+    }
+    return curr;
+}
+
+void output(int num = 10)
+{
+    Char* curr = &file[0];
+    for (int i = 0; i < num; i++)
+    {
+        curr = curr -> next;
+        printf("%d ", curr -> content);
+    }
 }
 
 int main()
 {
-    int N, K;
-    int A, B, C;
-    node *tmp[6], *temp;
-    cin >> N >> K;
-    chart[0].value = 0;
-    for (int i = 0; i <= N; i++)
+    int a, b, c;
+    Char *a_1, *a_, *b_1, *b_, *c_1, *c_;
+    cin >> n >> k;
+    init();
+    for (int i = 0; i < k; i++)
     {
-        chart[i].value = i;
-        chart[i].after = &chart[i + 1];
+        cin >> a >> b >> c;
+        a_1 = index(a-1);
+        b_1 = index(b+1);
+        c_ = index(c);
+        a_ = index(a);
+        b_ = index(b);
+        c_1 = index(c+1);
+        a_1 -> next = b_1;
+        c_ -> next = a_;
+        b_ -> next = c_;
     }
-    for (int i = 0; i < K; i++)
-    {
-        cin >> A >> B >> C;
-        // Every time paste:
-        // chart[A-1]->chart[B+1]
-        // chart[C]->chart[A]
-        // chart[B]->chart[C+1]
-        tmp[0] = index(A-1);
-        tmp[1] = index(B+1);
-        tmp[2] = index(C);
-        tmp[3] = index(A);
-        tmp[4] = index(B);
-        tmp[5] = index(C+1);
-        tmp[0]->after = tmp[1];
-        tmp[2]->after = tmp[3];
-        tmp[4]->after = tmp[5];
-    }
-    temp = &chart[0];
-    for (int i = 0; i < 10; i++)
-    {
-        temp = temp->after;
-        printf("%d\n", temp->value);
-    }
+    output();
     return 0;
 }
